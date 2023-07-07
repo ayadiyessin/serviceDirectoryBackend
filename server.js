@@ -1,12 +1,16 @@
 const express = require('express');
 const app = express();
-const authRoutes = require('./models/user.models');
-
 // Middleware to parse JSON requests
 app.use(express.json());
 
+const authRoutes = require('./models/user.models');
+require('./routes/offer.route')(app) ;
+require('./routes/media.route')(app);
+require('./routes/keywords.route')(app);
+
 // Routes
 app.use('/auth', authRoutes);
+
 
 // Start the server
 app.listen(3000, () => {
