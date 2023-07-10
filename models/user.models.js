@@ -63,6 +63,7 @@ router.post('/login', async (req, res) => {
         } );
     }
   });
+  // verif token 
   router.get('/verify', async (req, res, next) => {
     const { authorization } = req.headers;
     const token = authorization.split(' ')[1];

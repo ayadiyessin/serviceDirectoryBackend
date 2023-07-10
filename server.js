@@ -10,7 +10,7 @@ require('./routes/keywords.route')(app);
 
 // Routes
 app.use('/auth', authRoutes);
-
+app.use('/public',express.static('public'));
 
 // Start the server
 app.listen(3000, () => {
