@@ -51,6 +51,7 @@ router.post('/login', async (req, res) => {
       } else {
         // Generate a JWT
         const token = jwt.sign({ userId: user.id }, 'your_secret_key');
+        
   
         res.status(200).json({ token,user });
       }
@@ -62,5 +63,17 @@ router.post('/login', async (req, res) => {
         } );
     }
   });
+  router.get('/verify', async (req, res, next) => {
+    const { authorization } = req.headers;
+    const token = authorization.split(' ')[1];
+    try {
+         const jt = await jwt.verify(token, 'your_secret_key');
+         res.status(200).send(true);
+         //do something
+    } catch (error) {
+         res.status(401).send("Unauthorized");
+     }
+     
+})
   
   module.exports = router;
