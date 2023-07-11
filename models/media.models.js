@@ -28,10 +28,12 @@ const multer=require ('multer');
       const id = parseInt(req.params.id);
    
       const media= await pool.query(
-        'select * from  media WHERE  id = $1',
+        'SELECT * from  media WHERE  id = $1',
         [id],)
+        console.log(id);
         if(media.rowCount>0){
-          const photo=media.rows[0].photo;
+          const photo=media.rows[0].name;
+          console.log("iiiiiii",photo);
           var filePath = './public/'+photo; 
           if(fs.existsSync(filePath)){
             fs.unlinkSync(filePath);
@@ -47,8 +49,8 @@ const multer=require ('multer');
     const url = req.protocol + '://' + req.get('host') 
     
    
-    const {photo}= req.body;
-    console.log(photo);
+    const {name}= req.body;
+    console.log('ooooooo',name);
    
     pool.query(
       'DELETE FROM media WHERE id = $1',
@@ -56,7 +58,7 @@ const multer=require ('multer');
       (error, results) => {
         
         if (error) {
-          console.log(photo);
+          console.log(name);
           throw error;
         }
        
