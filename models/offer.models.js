@@ -46,12 +46,12 @@ const getOffer = (request, response) => {
   };
   
   const createOffer = (request, response) => {
-    const { name,title,description,shortdescription,url,type,expiration,keywords } = request.body;
+    const { name,title,description,shortdescription,url,type,expiration,keywords,id_category } = request.body;
     const created_at = new Date(); // Get the current date and time
   
     pool.query(
-      'INSERT INTO offer (name,title,description,shortdescription,url,type,creation,updated_at,expiration,keywords) VALUES ($1, $2, $3, $4, $5, $6, $7, $7, $8, $9) RETURNING id',
-      [name,title,description,shortdescription,url,type,created_at,expiration,keywords],
+      'INSERT INTO offer (name,title,description,shortdescription,url,type,creation,updated_at,expiration,keywords,id_category) VALUES ($1, $2, $3, $4, $5, $6, $7, $7, $8, $9,$10) RETURNING id',
+      [name,title,description,shortdescription,url,type,created_at,expiration,keywords,id_category],
       (error, results) => {
         if (error) {
           throw error;
