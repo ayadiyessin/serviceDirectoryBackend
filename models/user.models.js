@@ -11,6 +11,7 @@ module.exports = pool;
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const isAuth  = require('../utile/util');
 const router = express.Router();
 
 // User registration
@@ -65,15 +66,13 @@ router.post('/login', async (req, res) => {
   });
   // verif token 
   router.get('/verify', async (req, res, next) => {
-    const { authorization } = req.headers;
-    const token = authorization.split(' ')[1];
-    try {
-         const jt = await jwt.verify(token, 'your_secret_key');
-         res.status(200).send(true);
-         //do something
-    } catch (error) {
-         res.status(401).send("Unauthorized");
-     }
+    var test =await isAuth(req);
+    if(test){
+      res.status(200).send(true);
+    }
+    else{
+      res.status(401).send("Unauthorized");
+    }
      
 })
   

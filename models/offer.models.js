@@ -9,12 +9,18 @@ const pool = new Pool({
 })
 module.exports=pool ;
 const getOffer = (request, response) => {
-    pool.query('SELECT * FROM offer ORDER BY id ASC', (error, results) => {
-      if (error) {
-        throw error
-      }
-      response.status(200).json(results.rows)
-    })
+   if(isAuth(request)){
+      pool.query('SELECT * FROM offer ORDER BY id ASC', (error, results) => {
+        if (error) {
+          throw error
+        }
+        response.status(200).json(results.rows)
+      })
+   }
+   else {
+    response.status(401).send("unauthorized")
+
+   }
   }
   const getOfferById = (request, response) => {
     const id = parseInt(request.params.id)
