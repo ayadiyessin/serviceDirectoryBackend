@@ -71,13 +71,31 @@ const getCategory = (request, response) => {
       response.status(200).send(`category deleted with ID: ${id}`)
     })
   };
+  const createSubCategory = (request, response) => {
+    const {name_cat} = request.body;
+    const parent_id = parseInt(request.params.id)
+        pool.query(
+      'INSERT INTO category (name_cat,parent_id) VALUES ($1, $2) RETURNING id',
+      [name_cat,parent_id],
+      (error, results) => {
+        if (error) {
+          throw error;
+        }
+        const categoryId = results.rows[0].id;
+        response.status(201).send(`category added with ID: ${categoryId}`);
+      }
+    );
+  };
+
   
   module.exports = {
     getCategory,
     getCategoryById,
     createCategory,
+    createSubCategory,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    
 
   }
 
