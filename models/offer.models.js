@@ -29,12 +29,12 @@ const getOffer = (request, response) => {
   const updateOffer = (request, response) => {
     const id = parseInt(request.params.id)
 
-    const { name,title,description,sortdescription,url,type,expiration } = request.body;
-   // const updated_at = new Date(); // Get the current date and time
+    const { name,title,description,shortdescription,url,type,expiration,keywords } = request.body;
+    const updated_at = new Date(); // Get the current date and time
   
     pool.query(
-      'UPDATE offer SET name=$1,title=$2,description=$3,sortdescription=$4,url=$5,type=$6,expiration=$7 WHERE id = $8',
-      [name,title,description,sortdescription,url,type,expiration,id],
+      'UPDATE offer SET name=$1,title=$2,description=$3,shortdescription=$4,url=$5,type=$6,expiration=$7,updated_at=$8 , keywords=$9 WHERE id = $10',
+      [name,title,description,shortdescription,url,type,expiration,updated_at,keywords,id],
       (error, results) => {
         if (error) {
           throw error;
@@ -46,12 +46,12 @@ const getOffer = (request, response) => {
   };
   
   const createOffer = (request, response) => {
-    const { name,title,description,sortdescription,url,type,expiration,id_users } = request.body;
+    const { name,title,description,shortdescription,url,type,expiration,keywords } = request.body;
     const created_at = new Date(); // Get the current date and time
   
     pool.query(
-      'INSERT INTO offer (name,title,description,sortdescription,url,type,creation,expiration,id_users) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id',
-      [name,title,description,sortdescription,url,type,created_at,expiration,id_users],
+      'INSERT INTO offer (name,title,description,shortdescription,url,type,creation,updated_at,expiration,keywords) VALUES ($1, $2, $3, $4, $5, $6, $7, $7, $8, $9) RETURNING id',
+      [name,title,description,shortdescription,url,type,created_at,expiration,keywords],
       (error, results) => {
         if (error) {
           throw error;

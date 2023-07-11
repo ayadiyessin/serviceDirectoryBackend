@@ -30,11 +30,11 @@ const getCategory = (request, response) => {
     const id = parseInt(request.params.id)
 
     const { name_cat,parent_id } = request.body;
-   // const updated_at = new Date(); // Get the current date and time
+    const updated_at = new Date(); // Get the current date and time
   
     pool.query(
-      'UPDATE category SET name_cat=$1,parent_id=$2 WHERE id = $3',
-      [name_cat,parent_id,id],
+      'UPDATE category SET name_cat=$1,parent_id=$2,updated_at=$3 WHERE id = $4',
+      [name_cat,parent_id,updated_at,id],
       (error, results) => {
         if (error) {
           throw error;
@@ -50,8 +50,8 @@ const getCategory = (request, response) => {
     const created_at = new Date(); // Get the current date and time
   
     pool.query(
-      'INSERT INTO category (name_cat,parent_id) VALUES ($1, $2) RETURNING id',
-      [name_cat,parent_id],
+      'INSERT INTO category (name_cat,parent_id,updated_at) VALUES ($1, $2,$3) RETURNING id',
+      [name_cat,parent_id,created_at],
       (error, results) => {
         if (error) {
           throw error;
