@@ -7,7 +7,7 @@ const authRoutes = require('./models/user.models');
 require('./routes/offer.route')(app) ;
 require('./routes/media.route')(app);
 require('./routes/keywords.route')(app);
-
+require('./routes/category.route')(app) ;
 // Routes
 app.use('/auth', authRoutes);
 app.use('/public',express.static('public'));
